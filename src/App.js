@@ -9,6 +9,16 @@ export class App extends React.Component {
       buyItems:['milk','bread','fruit']
     }
   }
+  onAddItem=(event)=>{
+    event.preventDefault();
+    const {buyItems}=this.state;
+    const newItem=this.newItem.value;
+    this.setState({
+      buyItems:[...this.state.buyItems,newItem]
+    })
+    this.addForm.reset();
+
+  }
 
 
   render(){
@@ -16,6 +26,23 @@ export class App extends React.Component {
     return (
       <div className="App">
         <h1>Shopping List</h1>
+
+          <form className="form-inline"
+           onSubmit={this.onAddItem} ref={input=>this.addForm=input}
+          >
+            <div className="form-group mb-2"></div>
+            <div className="form-group mb-2">
+              <label for="inputPassword2" className="sr-only">Add New Item</label>
+              <input type="text" className="form-control" id="cartItem" placeholder="Add Item"
+
+              ref={input=>this.newItem=input}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary mb-1">Add</button>
+          </form>
+
+
+
         <table className="table">
           <thead>
             <tr>
