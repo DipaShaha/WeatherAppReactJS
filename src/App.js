@@ -30,8 +30,8 @@ export class App extends React.Component {
 
   }
 
-  onRemoveItem(){
-    
+  onRemoveItem=(item)=>{
+    console.log("remove "+item);
   }
 
 
@@ -75,6 +75,11 @@ export class App extends React.Component {
                   <th scope="row">1</th>
                   <td>{item}</td>
                   <td>Otto</td>
+                  <td className="text-right">
+                    <button type="submit" className="btn btn-danger btn-sm" onClick={(e)=>this.onRemoveItem(item)}>
+                      Remove
+                    </button>
+                  </td>
                 </tr>
                 );
              })
