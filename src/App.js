@@ -31,12 +31,29 @@ export class App extends React.Component {
   }
 
   onRemoveItem=(item)=>{
-    console.log("remove "+item);
+    const newBuyItems=this.state.buyItems.filter(buyItems=>{
+        return buyItems!== item;
+      });
+    this.setState({
+        buyItems:[...newBuyItems]
+      })
+    if(newBuyItems.length===0){
+      this.setState({
+        message:'Cart is empty Add Item'
+      })
+    }
+  }
+  onClearAll=()=>{
+    this.setState({
+      buyItems:[],
+       message:'Cart is empty Add Item'
+    })
   }
 
 
   render(){
-    const {buyItems,message}=this.state; //return r baire
+    const {buyItems,message}=this.state; 
+  //return r baire
     return (
       <div className="App">
         <h1>Shopping List</h1>
@@ -58,12 +75,12 @@ export class App extends React.Component {
         <div className="content">
            {
 
-            message!=='' && <p className="message text-danger">{message}</p>
+            (message!=='' || buyItems.length===0) && <p className="message text-danger">{message}</p>
           }
+          {buyItems.length>0 &&
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">Item</th>
                 <th scope="col">Action</th>
               </tr>
@@ -72,9 +89,7 @@ export class App extends React.Component {
             {buyItems.map(item=>{
                 return(
                 <tr key={item}>
-                  <th scope="row">1</th>
                   <td>{item}</td>
-                  <td>Otto</td>
                   <td className="text-right">
                     <button type="submit" className="btn btn-danger btn-sm" onClick={(e)=>this.onRemoveItem(item)}>
                       Remove
@@ -86,7 +101,19 @@ export class App extends React.Component {
             }
               
             </tbody>
+          
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td className="text-right">
+                <button className="btn btn-primary" type="button" onClick={(e)=>this.onClearAll()}>
+                  Clear All
+                </button>
+              </td>
+            </tr>
+          </tfoot>
           </table>
+          }
         </div>
       </div>
     );
